@@ -3,7 +3,7 @@
   become: yes
   vars:
     desired_ansible_version: "2.4.1.0"
-    bootcamp_automation_branch: "BC_ESR"
+    td_automation_branch: "BC_ESR"
   gather_facts: no
   roles:
   - prepare-oob-server
@@ -12,7 +12,7 @@
   hosts: spine*:leaf*
   become: yes
   vars:
-   desired_cl_release: "3.7.0"
+   desired_cl_release: "3.7.11"
   gather_facts: no
   roles:
   - prepare-switches
