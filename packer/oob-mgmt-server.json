@@ -1,7 +1,7 @@
 {
     "variables": {
       "ansible_version": "2.4.1.0",
-      "iso_url": "http://cumulusfiles.s3.amazonaws.com/CumulusLinux-3.7.11/cumulus-linux-3.7.11-vx-amd64-qemu.qcow2",
+      "iso_url": "https://d2cd9e7ca6hntp.cloudfront.net/public/CumulusLinux-3.7.11/cumulus-linux-3.7.11-vx-amd64-qemu.qcow2",
       "iso_checksum": "C00E0B1C70B53B5A08F2F53ECB7AB88B8641EBAF103A76EC74DA9E6E430BBD9A",
       "ssh_username": "cumulus",
       "ssh_password": ""
