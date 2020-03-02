@@ -21,49 +21,7 @@ echo "cumulus ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10_cumulus
 sed -i '/^server [1-3]/d' /etc/ntp.conf
 #   Modify the first server to point to the oob-mgmt-server as the authoritative time source
 sed -i 's/^server 0.cumulusnetworks.pool.ntp.org iburst/server 192.168.0.254 iburst/g' /etc/ntp.conf
-# Check to see if the internet is reachable
-ping 8.8.8.8 -c2
-if [ "\$?" == "0" ]; then
-  # Update the GPG key so we don't encounter errors during install process
-  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys A88BBC95
-  # Install the Cumulus External Repository Source
-  cat << TOE > /etc/apt/sources.list.d/cumulus-apps.list
-deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-1.1
-TOE
-  # Install NetQ
-  apt-get update -qy
-  apt-get install cumulus-netq -qy
-  # Setup a Default configuration for NetQ
-  cat << TOE > /etc/netq/netq.yml
-#/etc/netq/netq.yml
-# See /usr/share/doc/netq/examples for full configuration file
-backend:
-  port: 6379
-  server: 192.168.0.254
-  vrf: default
-user-commands:
-- commands:
-  - command: /bin/cat /etc/network/interfaces
-    key: config-interfaces
-    period: '60'
-  - command: /bin/cat /etc/ntp.conf
-    key: config-ntp
-    period: '60'
-  service: misc
-- commands:
-  - command:
-    - /usr/bin/vtysh
-    - -c
-    - show running-config
-    key: config-quagga
-    period: '60'
-  service: zebra
-TOE
-  # Enable NTP and NetQ
-  systemctl restart ntp
-  systemctl restart netq-agent
-  systemctl restart netqd
-fi
+
 #nohup bash -c 'sleep 2; shutdown now -r "Rebooting to Complete ZTP"' &
 exit 0
 # The line below is required to be a valid ZTP script
