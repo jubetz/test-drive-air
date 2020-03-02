@@ -38,7 +38,7 @@ packer build -var 'ssh_password=<PASSWORD>' switch.json
 packer build server.json
 ```
 
-The resulting images can now be uploaded into Cumulus AIR and built into a bootcamp topology. An example topology definition is provided in `testdrive_topology.json`.
+The resulting images can now be uploaded into Cumulus AIR and built into a test drive topology. An example topology definition is provided in `testdrive_topology.json`.
 
 Then, create air image instances and get UUID.
 - oob-mgmt-server
