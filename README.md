@@ -1,4 +1,4 @@
-# citc-bootcamp
+# test-drive-air
 
 ### Cumulus Linux
 
@@ -6,7 +6,7 @@ Cumulus Linux is a software distribution that runs on top of industry standard n
 
 For further details please see: [cumulusnetworks.com](http://www.cumulusnetworks.com)
 
-### Building Bootcamp Images for Cumulus AIR
+### Building Test Drive Images for Cumulus AIR
 
 #### Prerequisites
 
@@ -38,4 +38,18 @@ packer build -var 'ssh_password=<PASSWORD>' switch.json
 packer build server.json
 ```
 
-The resulting images can now be uploaded into Cumulus AIR and built into a bootcamp topology. An example topology definition is provided in `bootcamp_topology.json`.
+The resulting images can now be uploaded into Cumulus AIR and built into a bootcamp topology. An example topology definition is provided in `testdrive_topology.json`.
+
+Then, create air image instances and get UUID.
+- oob-mgmt-server
+- oob-mgmt-switch
+- testdrive-switch
+- testdrive-server
+
+Then update the OS in the .json with the image
+
+Then, create the topology in AIR using the .json
+
+Then, create a simulation instance using the topology instance.
+
+Then start the topology and test it, Then power it off to get snapshot.
