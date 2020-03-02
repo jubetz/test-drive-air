@@ -30,11 +30,6 @@
   debug:
     msg: "This Bootcamp was built for {{desired_ansible_version}} but version {{ansible_vers.stdout}} is installed."
 
-- name: Install apache2
-  apt:
-    name: apache2
-    state: present
-
 - name: Installing Git default settings
   copy: 
     content: |
