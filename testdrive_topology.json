@@ -1,9 +1,10 @@
 {
     "name": "Cumulus Linux Test Drive",
+    "organization": "43d4fefe-89be-433e-827e-070581e2a480",
     "nodes": [
         {
             "name": "oob-mgmt-switch",
-            "os": "474b4b92-b66e-4c0f-823e-b09d20e1207c",
+            "os": "df6aac3d-a137-417e-9232-89d3131a4e3b",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -34,7 +35,7 @@
         },
         {
             "name": "oob-mgmt-server",
-            "os": "92c54399-4728-45bb-bdc5-90a7fd6e0a30",
+            "os": "7d970c51-2612-4626-853f-aeef3dc9e783",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -50,7 +51,7 @@
         },
         {
             "name": "spine01",
-            "os": "bc3eea01-e9ff-47c3-a633-9d90d4c67468",
+            "os": "91274b02-a012-4aec-a549-142de4241d30",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -69,7 +70,7 @@
         },
         {
             "name": "leaf01",
-            "os": "bc3eea01-e9ff-47c3-a633-9d90d4c67468",
+            "os": "91274b02-a012-4aec-a549-142de4241d30",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -97,7 +98,7 @@
         },
         {
             "name": "leaf02",
-            "os": "bc3eea01-e9ff-47c3-a633-9d90d4c67468",
+            "os": "91274b02-a012-4aec-a549-142de4241d30",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -125,7 +126,7 @@
         },
         {
             "name": "server01",
-            "os": "55c8edb8-53b1-4efd-8d3c-db7250d9b6ad",
+            "os": "9396a745-8a9d-4609-982b-5503d81ebd12",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -144,7 +145,7 @@
         },
         {
             "name": "server02",
-            "os": "55c8edb8-53b1-4efd-8d3c-db7250d9b6ad",
+            "os": "9396a745-8a9d-4609-982b-5503d81ebd12",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
