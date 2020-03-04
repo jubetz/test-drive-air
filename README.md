@@ -15,6 +15,29 @@ The following packages/applications need to be installed on the build host:
 - ansible (https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - cloud-localds (via `cloud-image-utils` https://manpages.debian.org/testing/cloud-image-utils/cloud-localds.1.en.html)
 - packer (https://www.packer.io/docs/install/index.html)
+- python3
+- b2sdk (pip3 install b2sdk)
+
+In the packer/ directory there are a few scripts. Run them in order.
+They ask you for credentials interactively
+
+1) ./build-images.sh
+2) ./create-images.sh
+3) python3 image-copy.py
+4) ./create-air-topology.sh
+
+Then you have to create a simulation instance from the topology instance - use swagger
+
+Then boot the sim from the UI. make last min changes. Verify
+
+Power off. That's the snapshot.
+
+
+
+
+
+
+
 
 #### Create SSH keys
 
