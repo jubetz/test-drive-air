@@ -18,4 +18,6 @@ group {
 
  host server02 {hardware ethernet a0:00:00:00:00:32; fixed-address 192.168.0.32; option host-name "server02"; }
 
+ host netq-ts {hardware ethernet a0:00:00:00:02:50; fixed-address 192.168.0.250; option host-name "netq-ts"; }
+
 }#End of static host group

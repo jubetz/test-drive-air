@@ -1,0 +1,37 @@
+- name: Detect Ubuntu Release
+  shell: cat /etc/lsb-release | grep DISTRIB_RELEASE | cut -d '=' -f2 
+  register: ubuntu_release
+  changed_when: false
+
+- debug: msg="Ubuntu Release {{ubuntu_release.stdout}}"
+
+#- name: Check for Supported Ubuntu Version
+#  assert:
+#    that: "ubuntu_release.stdout == desired_ubuntu_release"
+#    msg: "This Playbook is written for Ubuntu version {{desired_ubuntu_release}} but the environment is using version {{ubuntu_release.stdout}}"
+
+- name: Create cumulus user
+  user:
+    name: cumulus
+    groups:
+      - sudo
+    shell: /bin/bash
+    password: $1$8WOBD1pA$uph5ks6BG29F12dt/ORmE0
+  tags: create_user
+
+- name: Setup password-less sudo
+  copy:
+    content: |
+      cumulus ALL=(ALL) NOPASSWD:ALL
+    dest: /etc/sudoers.d/10_cumulus
+  tags: create_user
+
+- name: Create .ssh directory
+  file:
+    path: /home/cumulus/.ssh
+    state: directory
+    mode: 0700
+    owner: cumulus
+    group: cumulus
+  tags: create_user
+

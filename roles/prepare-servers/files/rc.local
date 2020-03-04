@@ -1,0 +1,4 @@
+#!/bin/bash
+sudo ifup eth0
+exit 0
+

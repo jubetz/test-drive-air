@@ -21,5 +21,6 @@ graph vx {
  "leaf01":"eth0" -- "oob-mgmt-switch":"swp4"
  "leaf02":"eth0" -- "oob-mgmt-switch":"swp5"
  "spine01":"eth0" -- "oob-mgmt-switch":"swp6"
+ "netq-ts":"eth0" -- "oob-mgmt-switch":"swp7"
 }
 

@@ -31,4 +31,10 @@ packer build server.json
 mv output-qemu/server.qcow2 image-build/
 rm -rf output-qemu
 
+packer build netq-ts.json
+
+mv output-qemu/netq-ts.qcow2 image-build/
+rm -rf output-qemu
+
+rm -rf packer_cache
 # now create the images on AIR

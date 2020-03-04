@@ -12,6 +12,9 @@ leaf02 ansible_host=192.168.0.12
 server01 ansible_host=192.168.0.31
 server02 ansible_host=192.168.0.32
 
+[netq]
+netq-ts ansible_host=192.168.0.250
+
 [all:vars]
 ansible_ssh_common_args="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 ansible_user=cumulus

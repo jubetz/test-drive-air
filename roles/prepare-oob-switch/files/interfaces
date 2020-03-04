@@ -14,4 +14,4 @@ iface eth0 inet dhcp
 auto bridge
 iface bridge
     alias Untagged Bridge
-	bridge-ports glob swp1-6
+	bridge-ports glob swp1-7

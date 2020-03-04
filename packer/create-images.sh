@@ -27,6 +27,18 @@ generate_air_image_create_data()
 EOF
 }
 
+generate_netq_image_create_data()
+{
+  cat <<EOF
+  {
+    "name": "$1",
+    "base": "true",
+    "mountpoint": "$2",
+    "agent_enabled": "true"
+  }
+EOF
+}
+
 #ask for AIR user/password
 echo "Air Username:"
 read AIR_USERNAME
@@ -77,6 +89,7 @@ UUID=`echo $curl_output | jq '.["id"]' | sed -e 's/^"//' -e 's/"$//'`
 
 echo "Renaming oob-mgmt-server.qcow2 as ${UUID}.qcow2"  #with the UUID rename the file for next stage
 mv image-build/oob-mgmt-server.qcow2 image-build/$UUID.qcow2
+echo "oob_mgmt_server_uuid=$UUID" >uuid.txt
 
 ## oob-mgmt-switch
 
@@ -93,6 +106,7 @@ UUID=`echo $curl_output | jq '.["id"]' | sed -e 's/^"//' -e 's/"$//'`
 
 echo "Renaming oob-mgmt-switch.qcow2 as ${UUID}.qcow2"  #with the UUID rename the file for next stage
 mv image-build/oob-mgmt-switch.qcow2 image-build/$UUID.qcow2 
+echo "oob_mgmt_switch_uuid=$UUID" >>uuid.txt
 
 # switches
 
@@ -109,6 +123,7 @@ UUID=`echo $curl_output | jq '.["id"]' | sed -e 's/^"//' -e 's/"$//'`
 
 echo "Renaming switch.qcow2 as ${UUID}.qcow2"  #with the UUID rename the file for next stage
 mv image-build/switch.qcow2 image-build/$UUID.qcow2 
+echo "switch_uuid=$UUID" >>uuid.txt
 
 # servers
 
@@ -125,9 +140,29 @@ UUID=`echo $curl_output | jq '.["id"]' | sed -e 's/^"//' -e 's/"$//'`
 
 echo "Renaming server.qcow2 as ${UUID}.qcow2"  #with the UUID rename the file for next stage
 mv image-build/server.qcow2 image-build/$UUID.qcow2 
+echo "server_uuid=$UUID" >>uuid.txt
+
+# netq-ts
+
+image_name="testdrive_netq-ts_$epoch_seconds"
+mountpoint="/dev/sda1" #for ubuntu 
+
+curl_output=`curl -f --header "Content-Type: application/json" \
+      --header "Authorization: Bearer $auth_token" \
+      --request POST \
+      --data "$(generate_netq_image_create_data $image_name $mountpoint)" \
+      $air_images_url`
+
+UUID=`echo $curl_output | jq '.["id"]' | sed -e 's/^"//' -e 's/"$//'`
+
+echo "Renaming netq-ts.qcow2 as ${UUID}.qcow2"  #with the UUID rename the file for next stage
+mv image-build/netq-ts.qcow2 image-build/$UUID.qcow2 
+echo "netq_ts_uuid=$UUID" >>uuid.txt
 
 echo "##########################################"
 echo "# Job ID: $epoch_seconds                 #"
 echo "##########################################"
 
 exit 0
+
+

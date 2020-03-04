@@ -1,0 +1,77 @@
+{
+  "variables": {
+    "iso_url": "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img",
+    "iso_checksum_url": "https://cloud-images.ubuntu.com/bionic/current/SHA256SUMS"
+  },
+  "builders":
+  [
+    {
+      "accelerator": "none",
+      "boot_wait": "3s",
+      "disk_image": true,
+      "disk_size": 36000,
+      "format": "qcow2",
+      "iso_checksum_url": "{{user `iso_checksum_url`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "sudo -S shutdown -P now",
+      "ssh_private_key_file": "./artifacts/id_rsa",
+      "ssh_username": "ubuntu",
+      "ssh_timeout": "20m",
+      "type": "qemu",
+      "use_default_display": true,
+      "qemuargs": [
+        ["-fda", "./artifacts/seed.img"],
+        ["-smp", "4"],
+        ["-m", "8192"],
+        ["-enable-kvm"]
+      ],
+      "vm_name": "netq-ts.qcow2"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "./artifacts/id_rsa.pub",
+      "destination": "/tmp/authorized_keys"
+    },
+    {
+      "type": "file",
+      "source": "../roles/prepare-netq-ts/files/01-netcfg.yaml",
+      "destination": "/tmp/01-netcfg.yaml"
+    },
+    {
+      "type": "file",
+      "source": "../roles/prepare-netq-ts/files/netq.yml",
+      "destination": "/tmp/netq.yml"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "hostnamectl set-hostname netq-ts",
+        "useradd cumulus -m -s /bin/bash",
+        "echo 'cumulus:CumulusLinux!' | chpasswd",
+        "echo 'cumulus ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/10_cumulus",
+        "mkdir /home/cumulus/.ssh",
+        "mv /tmp/authorized_keys /home/cumulus/.ssh/authorized_keys",
+        "chown cumulus:cumulus /home/cumulus/.ssh/authorized_keys",
+        "echo 'UseDNS no' >> /etc/ssh/sshd_config",
+        "sed -i 's/ console=ttyS0//g' /etc/default/grub.d/50-cloudimg-settings.cfg",
+        "update-grub",
+        "echo 'deb http://apps3.cumulusnetworks.com/repos/deb bionic netq-latest' >> /etc/apt/sources.list",
+        "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7EB364B4A88BBC95",
+        "apt update -o Acquire::ForceIPv4=true",
+        "apt install python python-pip python2.7 python3 python-apt git python3-pip lldpd cumulus-netq -y -o Acquire::ForceIPv4=true",
+        "pip install paramiko && pip3 install paramiko",
+        "usermod --shell /usr/sbin/nologin ubuntu",
+        "systemctl disable apport",
+        "mv /tmp/netq.yml /etc/netq/netq.yml",
+        "netq config restart cli",
+        "mv /tmp/01-netcfg.yaml /etc/netplan/01-netcfg.yaml",
+        "git clone https://gitlab.com/cumulus-consulting/air/air-agent.git",
+        "cd air-agent && sudo ./install.sh"
+      ],
+      "execute_command": "sudo sh -c '{{ .Path }}'"
+    }
+  ]
+}
+

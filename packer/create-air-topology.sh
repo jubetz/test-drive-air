@@ -1,11 +1,31 @@
+#!/bin/bash
+
+air_org="43d4fefe-89be-433e-827e-070581e2a480" #Cumulus Networks Staging, use swagger to find it
+topology_mgmt_url="https://staging.air.cumulusnetworks.com/api/v1/topology/"
+air_auth_url="https://staging.air.cumulusnetworks.com/api/v1/login/"
+
+#import the uuids from the file 
+#comes from running create-images.sh script
+. uuid.txt
+
+echo "Var Dump:"
+echo "oob-mgmt-switch: $oob_mgmt_switch_uuid"
+echo "oob-mgmt-server: $oob_mgmt_server_uuid"
+echo "netq-ts: $netq_ts_uuid"
+echo "switch: $switch_uuid"
+echo "server: $server_uuid"
+
+generate_topology_json_data()
+{
+  cat <<EOF
 {
     "name": "Cumulus Linux Test Drive",
-    "organization": "43d4fefe-89be-433e-827e-070581e2a480",
+    "organization": "$air_org",
     "nodes": [
         {
             "name": "oob-mgmt-switch",
-            "os": "df6aac3d-a137-417e-9232-89d3131a4e3b",
-            "memory": 1024,
+            "os": "$oob_mgmt_switch_uuid",
+            "memory": 768,
             "storage": 10,
             "cpu": 1,
             "interfaces": [
@@ -38,7 +58,7 @@
         },
         {
             "name": "oob-mgmt-server",
-            "os": "7d970c51-2612-4626-853f-aeef3dc9e783",
+            "os": "$oob_mgmt_server_uuid",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -54,7 +74,7 @@
         },
         {
             "name": "netq-ts",
-            "os": "7d970c51-2612-4626-853f-aeef3dc9e783",
+            "os": "$netq_ts_uuid",
             "memory": 8192,
             "storage": 36,
             "cpu": 4,
@@ -67,7 +87,7 @@
         },
         {
             "name": "spine01",
-            "os": "91274b02-a012-4aec-a549-142de4241d30",
+            "os": "$switch_uuid",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -86,7 +106,7 @@
         },
         {
             "name": "leaf01",
-            "os": "91274b02-a012-4aec-a549-142de4241d30",
+            "os": "$switch_uuid",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -114,7 +134,7 @@
         },
         {
             "name": "leaf02",
-            "os": "91274b02-a012-4aec-a549-142de4241d30",
+            "os": "$switch_uuid",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -142,7 +162,7 @@
         },
         {
             "name": "server01",
-            "os": "9396a745-8a9d-4609-982b-5503d81ebd12",
+            "os": "$server_uuid",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -161,7 +181,7 @@
         },
         {
             "name": "server02",
-            "os": "9396a745-8a9d-4609-982b-5503d81ebd12",
+            "os": "$server_uuid",
             "memory": 1024,
             "storage": 10,
             "cpu": 1,
@@ -362,3 +382,67 @@
         }
     ]
 }
+EOF
+}
+
+generate_auth_post_data()
+{
+  cat <<EOF
+  {
+    "username": "$AIR_USERNAME",
+    "password": "$AIR_PASSWORD"
+  }
+EOF
+}
+
+
+##################
+#### START SCRIPT HERE
+#######
+
+#ask for AIR user/password
+echo "Air Username:"
+read AIR_USERNAME
+
+echo "Air Password:"
+read AIR_PASSWORD
+
+## get air auth token
+# curl -f fails and exits if http error
+curl_output=`curl -f --header "Content-Type: application/json" \
+  --request POST \
+  --data "$(generate_auth_post_data)" \
+  $air_auth_url`
+
+## parse out auth token
+auth_token=`echo $curl_output | jq '.["token"]' | sed -e 's/^"//' -e 's/"$//'`
+
+#sanity check auth token
+if [ -z "$auth_token" ]
+then
+  echo "Fail: detected auth token is empty"
+  exit 1
+fi
+token_length=`expr length $auth_token`
+if [ "$token_length" != "189" ]
+then
+  echo "Fail: auth_token seems to be the wrong size?"
+  exit 1
+fi
+
+
+#post the topology
+
+curl_output=`curl -f --header "Content-Type: application/json" \
+  --header "Authorization: Bearer $auth_token" \
+  --request POST \
+  --data "$(generate_topology_json_data)" \
+  $topology_mgmt_url`
+
+echo "Response from AIR:"
+echo $curl_output 
+echo $curl_output | jq '.["url"]'
+
+rm uuid.txt
+
+exit 0

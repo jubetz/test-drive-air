@@ -9,3 +9,5 @@ spine01 ansible_host=192.168.0.21 ansible_user=cumulus
 server01 ansible_host=192.168.0.31 ansible_user=cumulus
 server02 ansible_host=192.168.0.32 ansible_user=cumulus
 
+[netq]
+netq-ts ansible_host=192.168.0.254 ansible_user=cumulus
