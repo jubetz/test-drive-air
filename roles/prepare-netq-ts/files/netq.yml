@@ -1,2 +1,7 @@
 netq-cli:
+  netq-user: ci_user@example.domain
   opta-check: false
+  port: 443
+  premises: netq-demo-dc-6
+  server: api.netq.cumulusnetworks.com
+
