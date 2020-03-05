@@ -28,7 +28,19 @@ They ask you for credentials interactively
 
 Then you have to create a simulation instance from the topology instance - use swagger
 
-Then boot the sim from the UI. make last min changes. Verify
+Then boot the sim from the UI. 
+
+Then wait for it to power on
+
+Then install bootstrap and install netq
+
+netq bootstrap master interface eth0 tarball s3://netq-archives/latest/netq-bootstrap-2.4.1.tgz
+
+netq install opta standalone full interface eth0 bundle s3://netq-archives/latest/NetQ-2.4.1-opta.tgz config-key CMScARImZ3cuYWlyZGV2MS5uZXRxZGV2LmN1bXVsdXNuZXR3b3Jrcy5jb20YuwM=
+
+netq install cli server (need to drop a file probably because of the opta-check: false)
+
+make last min changes. Verify
 
 Power off. That's the snapshot.
 
