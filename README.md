@@ -38,7 +38,7 @@ netq bootstrap master interface eth0 tarball s3://netq-archives/latest/netq-boot
 
 netq install opta standalone full interface eth0 bundle s3://netq-archives/latest/NetQ-2.4.1-opta.tgz config-key CMScARImZ3cuYWlyZGV2MS5uZXRxZGV2LmN1bXVsdXNuZXR3b3Jrcy5jb20YuwM=
 
-netq install cli server (need to drop a file probably because of the opta-check: false)
+^^^that's a dummy key
 
 make last min changes. Verify
 
