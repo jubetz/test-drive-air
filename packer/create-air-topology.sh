@@ -97,10 +97,12 @@ generate_topology_json_data()
                     "mac_address": "a0:00:00:00:00:21"
                 },
                 {
-                    "name": "swp1"
+                    "name": "swp1",
+                    "mac_address": "44:38:39:00:03:01"
                 },
                 {
-                    "name": "swp2"
+                    "name": "swp2",
+                    "mac_address": "44:38:39:00:03:02"
                 }
             ]
         },
@@ -116,19 +118,24 @@ generate_topology_json_data()
                     "mac_address": "a0:00:00:00:00:11"
                 },
                 {
-                    "name": "swp1"
+                    "name": "swp1",
+                    "mac_address": "44:38:39:00:01:01"
                 },
                 {
-                    "name": "swp2"
+                    "name": "swp2",
+                    "mac_address": "44:38:39:00:01:02"
                 },
                 {
-                    "name": "swp49"
+                    "name": "swp49",
+                    "mac_address": "44:38:39:00:01:49"
                 },
                 {
-                    "name": "swp50"
+                    "name": "swp50",
+                    "mac_address": "44:38:39:00:01:50"
                 },
                 {
-                    "name": "swp51"
+                    "name": "swp51",
+                    "mac_address": "44:38:39:00:01:51"
                 }
             ]
         },
@@ -144,19 +151,24 @@ generate_topology_json_data()
                     "mac_address": "a0:00:00:00:00:12"
                 },
                 {
-                    "name": "swp1"
+                    "name": "swp1",
+                    "mac_address": "44:38:39:00:02:01"
                 },
                 {
-                    "name": "swp2"
+                    "name": "swp2",
+                    "mac_address": "44:38:39:00:02:02"
                 },
                 {
-                    "name": "swp49"
+                    "name": "swp49",
+                    "mac_address": "44:38:39:00:02:49"
                 },
                 {
-                    "name": "swp50"
+                    "name": "swp50",
+                    "mac_address": "44:38:39:00:02:50"
                 },
                 {
-                    "name": "swp51"
+                    "name": "swp51",
+                    "mac_address": "44:38:39:00:02:51"
                 }
             ]
         },
@@ -172,10 +184,12 @@ generate_topology_json_data()
                     "mac_address": "a0:00:00:00:00:31"
                 },
                 {
-                    "name": "eth1"
+                    "name": "eth1",
+                    "mac_address": "44:38:39:00:08:01"
                 },
                 {
-                    "name": "eth2"
+                    "name": "eth2",
+                    "mac_address": "44:38:39:00:08:02"
                 }
             ]
         },
@@ -191,10 +205,12 @@ generate_topology_json_data()
                     "mac_address": "a0:00:00:00:00:32"
                 },
                 {
-                    "name": "eth1"
+                    "name": "eth1",
+                    "mac_address": "44:38:39:00:09:01"
                 },
                 {
-                    "name": "eth2"
+                    "name": "eth2",
+                    "mac_address": "44:38:39:00:09:02"
                 }
             ]
         }
