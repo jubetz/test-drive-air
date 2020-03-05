@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 
-air_auth_url="https://staging.air.cumulusnetworks.com/api/v1/login/"
-air_images_url="https://staging.air.cumulusnetworks.com/api/v1/image/"
+air_auth_url="https://air.cumulusnetworks.com/api/v1/login/"
+air_images_url="https://air.cumulusnetworks.com/api/v1/image/"
 
 ### generates data for AIR auth via curl
 generate_auth_post_data()
