@@ -1,4 +1,5 @@
 #!/bin/bash
 sudo ifup eth0
+sudo ifup lo
 exit 0
 
