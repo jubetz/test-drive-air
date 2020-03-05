@@ -14,7 +14,7 @@ application_key = input ("App key:")
 b2_api.authorize_account("production", application_key_id, application_key)
 
 source = './image-build'
-destination = 'b2://air-staging-templates'
+destination = 'b2://air-production-templates'
 
 source = parse_sync_folder(source, b2_api)
 destination = parse_sync_folder(destination, b2_api)
