@@ -1,8 +1,8 @@
 #!/bin/bash
 
-air_org="43d4fefe-89be-433e-827e-070581e2a480" #Cumulus Networks Staging, use swagger to find it
-topology_mgmt_url="https://staging.air.cumulusnetworks.com/api/v1/topology/"
-air_auth_url="https://staging.air.cumulusnetworks.com/api/v1/login/"
+air_org="66c9ed73-d076-4e1a-858d-61667bb60c5e" #Cumulus Networks, use swagger to find it
+topology_mgmt_url="https://air.cumulusnetworks.com/api/v1/topology/"
+air_auth_url="https://air.cumulusnetworks.com/api/v1/login/"
 
 #import the uuids from the file 
 #comes from running create-images.sh script
